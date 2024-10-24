@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Product.Api.Entities
 {
-	public class ProductDto : EntityAuditBase<long>
+	public class ProductEntity : EntityAuditBase<long>
 	{
 		[Required]
 		[Column(TypeName = "varchar(150)")]

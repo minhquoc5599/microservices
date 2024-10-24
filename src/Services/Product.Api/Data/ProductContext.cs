@@ -8,7 +8,13 @@ namespace Product.Api.Data
 	{
 		public ProductContext(DbContextOptions<ProductContext> options) : base(options) { }
 
-		public DbSet<ProductDto> Products { get; set; }
+		public DbSet<ProductEntity> Products { get; set; }
+
+		protected override void OnModelCreating(ModelBuilder modelBuilder)
+		{
+			base.OnModelCreating(modelBuilder);
+			modelBuilder.Entity<ProductEntity>().HasIndex(x => x.No).IsUnique();
+		}
 
 		public override Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
 		{

@@ -16,9 +16,9 @@ namespace Product.Api.Data
 			}
 		}
 
-		private static IEnumerable<ProductDto> getProducts()
+		private static IEnumerable<ProductEntity> getProducts()
 		{
-			return new List<ProductDto>
+			return new List<ProductEntity>
 			{
 				new()
 				{
