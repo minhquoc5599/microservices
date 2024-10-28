@@ -7,18 +7,18 @@ namespace Customer.Api.Entities
 	public class Customer : EntityBase<int>
 	{
 		[Required]
-		public string UserName { get; set; }
+		public required string UserName { get; set; }
 
 		[Required]
 		[Column(TypeName = "varchar(100)")]
-		public string FirstName { get; set; }
+		public required string FirstName { get; set; }
 
 		[Required]
 		[Column(TypeName = "varchar(150)")]
-		public string LastName { get; set; }
+		public required string LastName { get; set; }
 
 		[Required]
 		[EmailAddress]
-		public string EmailAddress { get; set; }
+		public required string EmailAddress { get; set; }
 	}
 }

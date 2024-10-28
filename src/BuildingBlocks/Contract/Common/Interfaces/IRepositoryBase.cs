@@ -5,7 +5,7 @@ using System.Linq.Expressions;
 
 namespace Contract.Common.Interfaces
 {
-	public interface IRepositoryQueyBase<T, K, TContext> where T : EntityBase<K>
+	public interface IRepositoryQueryBase<T, K, TContext> where T : EntityBase<K>
 		where TContext : DbContext
 	{
 		IQueryable<T> FindAll(bool trackChanges = false);
@@ -18,7 +18,7 @@ namespace Contract.Common.Interfaces
 		Task<T?> GetByIdAsync(K id, params Expression<Func<T, object>>[] includeProperties);
 	}
 
-	public interface IRepositoryBase<T, K, TContext> : IRepositoryQueyBase<T, K, TContext>
+	public interface IRepositoryBase<T, K, TContext> : IRepositoryQueryBase<T, K, TContext>
 		where T : EntityBase<K>
 		where TContext : DbContext
 	{

@@ -1,5 +1,6 @@
 using Common.Logging;
 using Contract.Common.Interfaces;
+using Customer.Api;
 using Customer.Api.Controllers;
 using Customer.Api.Data;
 using Customer.Api.Repositories;
@@ -23,11 +24,11 @@ try
 	// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 	builder.Services.AddEndpointsApiExplorer();
 	builder.Services.AddSwaggerGen();
+	builder.Services.AddAutoMapper(config => config.AddProfile(new MappingProfile()));
 
 	var connectionString = builder.Configuration.GetConnectionString("DefaultConnectionString");
 	builder.Services.AddDbContext<CustomerContext>(options => options.UseNpgsql(connectionString));
 	builder.Services.AddScoped<ICustomerRepository, CustomerRepository>()
-		.AddScoped(typeof(IRepositoryBase<,,>), typeof(RepositoryBase<,,>))
 		.AddScoped(typeof(IUnitOfWork<>), typeof(UnitOfWork<>))
 		.AddScoped<ICustomerService, CustomerService>();
 
@@ -38,15 +39,14 @@ try
 
 	app.MapCustomerApi();
 
+	app.UseSwagger();
 
-	// Configure the HTTP request pipeline.
-	if (app.Environment.IsDevelopment())
+	app.UseSwaggerUI(config =>
 	{
-		app.UseSwagger();
-		app.UseSwaggerUI();
-	}
+		config.SwaggerEndpoint("/swagger/v1/swagger.json", "Swagger customer api v1");
+	});
 
-	app.UseHttpsRedirection();
+	//app.UseHttpsRedirection(); //production
 
 	app.UseAuthorization();
 
