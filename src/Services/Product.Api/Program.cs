@@ -3,9 +3,10 @@ using Product.Api.Data;
 using Product.Api.Extensions;
 using Serilog;
 
+Log.Logger = new LoggerConfiguration().WriteTo.Console().CreateLogger();
 var builder = WebApplication.CreateBuilder(args);
 
-Log.Information("Start Product Api");
+Log.Information($"Start {builder.Environment.ApplicationName}");
 
 try
 {

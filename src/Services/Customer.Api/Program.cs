@@ -11,10 +11,13 @@ using Infrastructure.Common;
 using Microsoft.EntityFrameworkCore;
 using Serilog;
 
+
+Log.Logger = new LoggerConfiguration().WriteTo.Console().CreateLogger();
+
 var builder = WebApplication.CreateBuilder(args);
 builder.Host.UseSerilog(Serilogger.Configure);
 
-Log.Information("Start Customer Api");
+Log.Information($"Start {builder.Environment.ApplicationName}");
 
 try
 {
@@ -43,7 +46,7 @@ try
 
 	app.UseSwaggerUI(config =>
 	{
-		config.SwaggerEndpoint("/swagger/v1/swagger.json", "Swagger customer api v1");
+		config.SwaggerEndpoint("/swagger/v1/swagger.json", $"{builder.Environment.ApplicationName} v1");
 	});
 
 	//app.UseHttpsRedirection(); //production
