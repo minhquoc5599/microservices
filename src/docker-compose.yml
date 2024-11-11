@@ -52,6 +52,12 @@ services:
       context: .
       dockerfile: Services/Basket.Api/Dockerfile
 
+  order.api:
+    image: ${DOCKER_REGISTRY-}order-api:${PLATFORM:-linux}-${TAG:-latest}  
+    build:
+      context: .
+      dockerfile: Services/Order/Order.Api/Dockerfile
+
 #network
 networks:
   default: 

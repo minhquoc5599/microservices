@@ -147,4 +147,16 @@ services:
     ports:
       - "7004:80"
     restart: always
+
+  order.api:
+    container_name: order.api
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ASPNETCORE_URLS=http://+:80
+      - "ConnectionStrings:DefaultConnectionString=Server=host.docker.internal,1435;Database=OrderDB;User Id=sa;Password=Admin@123;TrustServerCertificate=True;Multipleactiveresultsets=true"
+    depends_on:
+      - orderdb
+    ports:
+      - "7005:80"
+    restart: always
    
