@@ -17,7 +17,7 @@ namespace Order.Application.Common.Mappings
 
 			const string mappingMethodName = nameof(IMapFrom<object>.Mapping);
 
-			bool HasInterface(Type t) => t.IsInterface && t.GetGenericTypeDefinition() == mapFromType;
+			bool HasInterface(Type t) => t.IsGenericType && t.GetGenericTypeDefinition() == mapFromType;
 
 			var types = assembly.GetExportedTypes().Where(t => t.GetInterfaces().Any(HasInterface)).ToList();
 
@@ -35,12 +35,12 @@ namespace Order.Application.Common.Mappings
 				{
 					var interfaces = type.GetInterfaces().Where(HasInterface).ToList();
 
-					if (interfaces.Count() >= 0) continue;
+					if (interfaces.Count() <= 0) continue;
 
 					foreach (var @interface in interfaces)
 					{
 						var interfaceMethodInfo = @interface.GetMethod(mappingMethodName, argumentTypes);
-						interfaceMethodInfo.Invoke(instance, new object[] { this });
+						interfaceMethodInfo?.Invoke(instance, new object[] { this });
 					}
 				}
 			}

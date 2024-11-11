@@ -1,7 +1,11 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Contract.Common.Interfaces;
+using Infrastructure.Common;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Order.Application.Common.Interfaces;
 using Order.Infrastructure.Data;
+using Order.Infrastructure.Repositories;
 
 namespace Order.Infrastructure.Services
 {
@@ -17,6 +21,8 @@ namespace Order.Infrastructure.Services
 			});
 
 			services.AddScoped<OrderSeeder>();
+			services.AddScoped<IOrderRepository, OrderRepository>();
+			services.AddScoped(typeof(IUnitOfWork<>), typeof(UnitOfWork<>));
 
 			return services;
 		}

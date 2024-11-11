@@ -1,4 +1,5 @@
 using Common.Logging;
+using Order.Application;
 using Order.Infrastructure.Data;
 using Order.Infrastructure.Services;
 using Serilog;
@@ -8,12 +9,14 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Host.UseSerilog(Serilogger.Configure);
 
 
-Log.Information("Start Order Api");
+Log.Information($"Start {builder.Environment.ApplicationName}");
 
 try
 {
 	// Add services to the container.
+	builder.Services.AddApplicationServices();
 	builder.Services.AddInfrastructure(builder.Configuration);
+	builder.Services.Configure<RouteOptions>(options => options.LowercaseUrls = true);
 
 	builder.Services.AddControllers();
 	// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
@@ -36,11 +39,11 @@ try
 		await orderSeeder.SeedOrderAsync();
 	}
 
-	app.UseHttpsRedirection();
+	//app.UseHttpsRedirection();
 
 	app.UseAuthorization();
 
-	app.MapControllers();
+	app.MapDefaultControllerRoute();
 
 	app.Run();
 }

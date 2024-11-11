@@ -9,7 +9,7 @@ namespace Order.Application.Common.Behaviours
 		private readonly IEnumerable<IValidator<TRequest>> _validators;
 
 		public ValidationBehaviour(IEnumerable<IValidator<TRequest>> validators)
-		{
+		{	
 			_validators = validators;
 		}
 
